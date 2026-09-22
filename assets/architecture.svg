@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 960" font-family="'Segoe UI', Helvetica, Arial, sans-serif">
+  <defs>
+    <filter id="softShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#000000" flood-opacity="0.16"/>
+    </filter>
+    <marker id="arrowGray" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#4b5563"/>
+    </marker>
+    <marker id="arrowRed" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#b91c1c"/>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="1400" height="960" fill="#ffffff"/>
+
+  <!-- connectors (drawn first, under the boxes) -->
+  <g fill="none" stroke="#4b5563" stroke-width="2.5">
+    <path d="M230,370 C270,370 270,135 310,135" marker-end="url(#arrowGray)"/>
+    <path d="M230,370 C270,370 270,655 310,655" marker-end="url(#arrowGray)"/>
+    <path d="M610,135 C645,135 645,360 670,360" marker-end="url(#arrowGray)"/>
+    <path d="M610,655 C645,655 645,430 670,430" marker-end="url(#arrowGray)"/>
+    <path d="M970,395 L1030,395" marker-end="url(#arrowGray)"/>
+    <path d="M1180,470 L1180,498" marker-end="url(#arrowGray)"/>
+    <path d="M1180,630 L1180,658" marker-end="url(#arrowGray)"/>
+  </g>
+
+  <!-- pseudo-label self-training loop -->
+  <path d="M1030,600 C760,900 400,900 150,440" fill="none" stroke="#b91c1c" stroke-width="2.5" marker-end="url(#arrowRed)"/>
+  <text x="580" y="872" text-anchor="middle" font-size="16" font-style="italic" fill="#b91c1c">Round 1 → confident test negatives (sigmoid &lt; 0.15 on both streams)</text>
+  <text x="580" y="898" text-anchor="middle" font-size="16" font-style="italic" fill="#b91c1c">added as pseudo-labels → Round 2 retrains both streams from scratch</text>
+
+  <!-- Input -->
+  <g filter="url(#softShadow)">
+    <rect x="30" y="300" width="200" height="140" rx="20" fill="#eef1fb" stroke="#33415c" stroke-width="2"/>
+  </g>
+  <text x="130" y="336" text-anchor="middle" font-size="20" font-weight="700" fill="#111827">Input Image</text>
+  <text x="130" y="370" text-anchor="middle" font-size="16" fill="#1f2937">RGB PNG</text>
+  <text x="130" y="404" text-anchor="middle" font-size="16" fill="#1f2937">no fixed orientation</text>
+
+  <!-- RGB Stream -->
+  <g filter="url(#softShadow)">
+    <rect x="310" y="40" width="300" height="190" rx="20" fill="#dceafe" stroke="#2b6cb0" stroke-width="2"/>
+  </g>
+  <text x="460" y="84" text-anchor="middle" font-size="20" font-weight="700" fill="#111827">RGB Stream</text>
+  <text x="460" y="118" text-anchor="middle" font-size="16" fill="#1f2937">raw pixels</text>
+  <text x="460" y="152" text-anchor="middle" font-size="16" fill="#1f2937">flip / rotate / color jitter</text>
+  <text x="460" y="186" text-anchor="middle" font-size="16" fill="#1f2937">+ MixUp (α = 0.2)</text>
+
+  <!-- Edge Stream -->
+  <g filter="url(#softShadow)">
+    <rect x="310" y="560" width="300" height="190" rx="20" fill="#fdead7" stroke="#c2410c" stroke-width="2"/>
+  </g>
+  <text x="460" y="604" text-anchor="middle" font-size="20" font-weight="700" fill="#111827">Edge Stream</text>
+  <text x="460" y="638" text-anchor="middle" font-size="16" fill="#1f2937">bilateral filter →</text>
+  <text x="460" y="672" text-anchor="middle" font-size="16" fill="#1f2937">Canny + Sobel + Laplacian</text>
+  <text x="460" y="706" text-anchor="middle" font-size="16" fill="#1f2937">material-invariant, 3ch</text>
+
+  <!-- Shared backbone -->
+  <g filter="url(#softShadow)">
+    <rect x="670" y="285" width="300" height="220" rx="20" fill="#e3f5e1" stroke="#2f855a" stroke-width="2"/>
+  </g>
+  <text x="820" y="344" text-anchor="middle" font-size="20" font-weight="700" fill="#111827">ShapeNet Backbone</text>
+  <text x="820" y="378" text-anchor="middle" font-size="16" fill="#1f2937">4× (ResBlock + SE)</text>
+  <text x="820" y="412" text-anchor="middle" font-size="16" fill="#1f2937">+ strided conv</text>
+  <text x="820" y="446" text-anchor="middle" font-size="16" fill="#1f2937">AdamW · cosine LR · SWA</text>
+
+  <!-- Test-time adaptation -->
+  <g filter="url(#softShadow)">
+    <rect x="1030" y="320" width="300" height="150" rx="20" fill="#f1e7fb" stroke="#6b46c1" stroke-width="2"/>
+  </g>
+  <text x="1180" y="383" text-anchor="middle" font-size="20" font-weight="700" fill="#111827">Test-Time Adaptation</text>
+  <text x="1180" y="417" text-anchor="middle" font-size="16" fill="#1f2937">BN adaptation + 4-way TTA</text>
+
+  <!-- Ensemble -->
+  <g filter="url(#softShadow)">
+    <rect x="1030" y="500" width="300" height="130" rx="20" fill="#f1e7fb" stroke="#6b46c1" stroke-width="2"/>
+  </g>
+  <text x="1180" y="553" text-anchor="middle" font-size="20" font-weight="700" fill="#111827">Logit Ensemble</text>
+  <text x="1180" y="587" text-anchor="middle" font-size="16" fill="#1f2937">0.5 · RGB + 0.5 · Edge</text>
+
+  <!-- Output -->
+  <g filter="url(#softShadow)">
+    <rect x="1030" y="660" width="300" height="110" rx="20" fill="#eef1fb" stroke="#33415c" stroke-width="2"/>
+  </g>
+  <text x="1180" y="703" text-anchor="middle" font-size="20" font-weight="700" fill="#111827">submission.csv</text>
+  <text x="1180" y="737" text-anchor="middle" font-size="16" fill="#1f2937">(ID, Label)</text>
+</svg>

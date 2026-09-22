@@ -7,7 +7,7 @@ Built for the **[IITH Deep Learning 2026 Hackathon](https://www.kaggle.com/compe
 **Public leaderboard: 0.8092** — up from a 0.7534 single-stream baseline.
 
 <p align="center">
-  <img src="assets/architecture.png" alt="Dual-stream architecture diagram" width="820" />
+  <img src="assets/architecture.svg" alt="Dual-stream architecture diagram" width="820" />
 </p>
 
 ## Problem
@@ -66,7 +66,6 @@ src/scene_classifier/    Installable package (the refactored pipeline)
 tests/                    Model/transform smoke tests (pytest)
 notebooks/                Original Kaggle submission notebook (unmodified)
 reports/                  Full written report
-submissions/              Final submission.csv
 assets/                   README diagrams
 ```
 
@@ -75,8 +74,7 @@ assets/                   README diagrams
 ## Usage
 
 ```bash
-pip install -r requirements.txt
-pip install -e .
+pip install -e ".[dev]"
 ```
 
 Expected dataset layout:
