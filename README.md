@@ -50,7 +50,7 @@ Both streams share **ShapeNet** ([`model.py`](src/scene_classifier/model.py)): 4
 | A4 | + SWA + BN test-time adaptation | ≈0.787 |
 | **Final** | + Pseudo-labeling + 4-way TTA | **0.8092** |
 
-Both streams reach ≈100% validation accuracy but only 0.8092 on the leaderboard — a ≈19-point gap indicating the models partly rely on spurious, training-distribution-specific correlations rather than the true rule. The edge stream and self-training loop narrow this gap but don't close it. Full analysis in the [report](reports/team_48_report.pdf).
+Both streams reach ≈100% validation accuracy but only 0.8092 on the leaderboard — a ≈19-point gap indicating the models partly rely on spurious, training-distribution-specific correlations rather than the true rule. The edge stream and self-training loop narrow this gap but don't close it. Full analysis in the [report](reports/report.pdf).
 
 ## Repository Structure
 
@@ -69,7 +69,7 @@ reports/                  Full written report
 assets/                   README diagrams
 ```
 
-`src/scene_classifier` is a from-scratch refactor of `notebooks/team_48_original_submission.ipynb` into a modular, tested package — same logic, the notebook stays untouched as the historical record of what actually ran on Kaggle.
+`src/scene_classifier` is a from-scratch refactor of `notebooks/original_submission.ipynb` into a modular, tested package — same logic, the notebook stays untouched as the historical record of what actually ran on Kaggle.
 
 ## Usage
 
@@ -100,14 +100,6 @@ pytest tests/   # no dataset needed — shape/contract checks only
 | Negative-only pseudo-labels | A false positive would inflate the positive rate and hurt accuracy directly; only dual-model-agreed, high-confidence negatives are used |
 | 4-way TTA, not 8-way with rotations | Rotations gave edge maps ambiguous spatial relationships; flips alone were simpler and stronger |
 | Equal-weight (0.5/0.5) ensemble | RGB and edge streams make largely uncorrelated errors; no held-out set was reserved to tune weights |
-
-## Team
-
-CS5480: Deep Learning, IIT Hyderabad — Team 48:
-
-- Aayush Ranjan — RGB model pipeline, augmentation, MixUp
-- Ankit Kumar Sinha — Ensemble & inference pipeline, TTA, BN adaptation, pseudo-labeling
-- Mayank Mishra — ShapeNet architecture, edge feature pipeline, dataset utilities
 
 ## License
 
