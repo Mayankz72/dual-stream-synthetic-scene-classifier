@@ -103,10 +103,6 @@ pytest tests/   # no dataset needed — shape/contract checks only
 | 4-way TTA, not 8-way with rotations | Rotations gave edge maps ambiguous spatial relationships; flips alone were simpler and stronger |
 | Equal-weight (0.5/0.5) ensemble | RGB and edge streams make largely uncorrelated errors; no held-out set was reserved to tune weights |
 
-## Related Work
-
-Another team ([Akshaybagde12/IIT-H-Deep-Learning-2026-Hackathon](https://github.com/Akshaybagde12/IIT-H-Deep-Learning-2026-Hackathon), 3rd/74, public LB 0.8135) built the same RGB + gradient-feature dual-stream design and reported identifying the latent rule directly: **label 1 iff a scene contains both a cube and a sphere**. A strong lead for closing the gap here.
-
 ## Team
 
 CS5480: Deep Learning, IIT Hyderabad — Team 48:
