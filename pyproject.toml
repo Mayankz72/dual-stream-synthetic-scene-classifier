@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "scene-classifier"
+version = "1.0.0"
+description = "Dual-stream RGB + edge-feature CNN for binary classification of synthetic 3D scenes"
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+    "torch>=2.0",
+    "torchvision>=0.15",
+    "opencv-python>=4.8",
+    "numpy>=1.24",
+    "pandas>=2.0",
+    "pillow>=10.0",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
